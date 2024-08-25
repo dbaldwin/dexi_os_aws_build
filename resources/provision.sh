@@ -138,6 +138,11 @@ pip3 install adafruit-circuitpython-neopixel
 pip3 install adafruit-circuitpython-led-animation
 #######################################################################################
 
+pip3 install requests
+git clone https://github.com/NotGlop/docker-drag /home/dexi/docker-drag
+cd /home/dexi/docker-drag
+python3 docker_pull.py droneblocks/dexi-droneblocks:latest
+
 ############################### provision runonce daemon ##############################
 # creates a job that only runs once (AKA on first boot)
 # we'll use this to provision the wifi stuff once the SD card is put into the PI
