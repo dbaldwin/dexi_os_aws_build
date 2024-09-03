@@ -105,12 +105,12 @@ echo "source /home/dexi/dexi_ws/install/setup.bash" >> /root/.bashrc
 cd /home/dexi/dexi_ws
 source /opt/ros/humble/setup.bash
 rosdep install --from-paths src -y --ignore-src
-colcon build --packages-select dexi_msgs
+colcon build --packages-select dexi_interfaces
 colcon build --packages-select led_msgs
 colcon build --packages-select px4_msgs
 colcon build --packages-select micro_ros_agent
 
-# So dexi_msgs and led_msgs dependencies are available to the packages below
+# So dexi_interfaces are available to the packages below
 source /home/dexi/dexi_ws/install/setup.bash
 
 colcon build --packages-select dexi_py
