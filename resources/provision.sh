@@ -124,6 +124,10 @@ colcon build --packages-select web_video_server # To make pi camera available on
 colcon build --packages-select apriltag_ros
 #######################################################################################
 
+################ clone node-red project for use in first_boot.sh ######################
+git clone https://github.com/DroneBlocks/node-red-dexi /home/dexi/node-red-dexi
+#######################################################################################
+
 #################################### clone ark repo ###################################
 git clone https://github.com/DroneBlocks/ark_companion_scripts.git /home/dexi/ark_companion_scripts
 cd /home/dexi/ark_companion_scripts
@@ -142,10 +146,24 @@ pip3 install adafruit-circuitpython-neopixel
 pip3 install adafruit-circuitpython-led-animation
 #######################################################################################
 
-pip3 install requests
-git clone https://github.com/NotGlop/docker-drag /home/dexi/docker-drag
+# For some reason this is continuously failing but works fine standalone
+# pip3 install requests
+# git clone https://github.com/NotGlop/docker-drag /home/dexi/docker-drag
+# cd /home/dexi/docker-drag
+# python3 docker_pull.py droneblocks/dexi-droneblocks:latest
+# python3 docker_pull.py droneblocks/dexi-node-red:latest
+
+mkdir /home/dexi/docker-drag
 cd /home/dexi/docker-drag
-python3 docker_pull.py droneblocks/dexi-droneblocks:latest
+curl -L -o droneblocks_dexi-droneblocks.tar "https://www.dropbox.com/scl/fi/ag6tml3hpqtg4g0olrkcc/droneblocks_dexi-droneblocks.tar?rlkey=yzr631iv0dv0dgjtzcolbozmg&st=eeaigvva&dl=1"
+curl -L -o droneblocks_dexi-node-red.tar "https://www.dropbox.com/scl/fi/a51ndr8s8xgz5swqu0rp8/droneblocks_dexi-node-red.tar?rlkey=2lphmkcbgcwtebws75mh40lbr&st=jmk2s8tc&dl=1"
+#######################################################################################
+
+########################## PX4 ROS Node for Navigation ################################
+# git clone https://github.com/dbaldwin/PX4-ROS-Node /home/dexi/PX4-ROS-Node
+# pip3 install pysm
+# pip3 install flask
+#######################################################################################
 
 ############################### provision runonce daemon ##############################
 # creates a job that only runs once (AKA on first boot)
