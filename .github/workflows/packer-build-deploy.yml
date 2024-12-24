@@ -19,11 +19,11 @@ jobs:
       # Step 2: Install Specific Packer Version (v1.9.2)
       - name: Install Packer v1.9.2
         run: |
-          curl -L -o packer.zip https://releases.hashicorp.com/packer/1.9.2/packer_1.9.2_linux_amd64.zip
-          unzip packer.zip -d /usr/local/bin/
-          rm packer.zip
-          packer version
-
+            curl -L -o packer.zip https://releases.hashicorp.com/packer/1.9.2/packer_1.9.2_linux_amd64.zip
+            sudo unzip -o packer.zip -d /usr/local/bin/
+            rm packer.zip
+            packer version
+    
       # Step 3: Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
