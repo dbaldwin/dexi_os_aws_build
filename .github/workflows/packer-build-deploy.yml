@@ -3,12 +3,12 @@ name: Build and Deploy Packer Image
 on:
   push:
     branches:
-      - packer_aws
+      - main
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
-    name: Build and Deploy Packer Image
+  setup-packer:
+    name: Install and Use Packer v1.9.2
     runs-on: ubuntu-latest
 
     steps:
@@ -16,11 +16,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Install Packer
-      - name: Install Packer
-        uses: hashicorp/setup-packer@v2
-        with:
-          packer-version: latest
+      # Step 2: Install Specific Packer Version (v1.9.2)
+      - name: Install Packer v1.9.2
+        run: |
+          curl -L -o packer.zip https://releases.hashicorp.com/packer/1.9.2/packer_1.9.2_linux_amd64.zip
+          unzip packer.zip -d /usr/local/bin/
+          rm packer.zip
+          packer version
 
       # Step 3: Configure AWS Credentials
       - name: Configure AWS Credentials
@@ -37,8 +39,3 @@ jobs:
       # Step 5: Build Packer Image
       - name: Build Packer Image
         run: packer build .
-
-      # Step 6: Post-Build Notification (Optional)
-      - name: Notify Deployment Success
-        if: success()
-        run: echo "Packer build and deployment completed successfully!"
