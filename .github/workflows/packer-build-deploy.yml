@@ -1,0 +1,44 @@
+name: Build and Deploy Packer Image
+
+on:
+  push:
+    branches:
+      - packer_aws
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy Packer Image
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the Repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Install Packer
+      - name: Install Packer
+        uses: hashicorp/setup-packer@v2
+        with:
+          packer-version: latest
+
+      # Step 3: Configure AWS Credentials
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      # Step 4: Validate Packer Template
+      - name: Validate Packer Template
+        run: packer validate .
+
+      # Step 5: Build Packer Image
+      - name: Build Packer Image
+        run: packer build .
+
+      # Step 6: Post-Build Notification (Optional)
+      - name: Notify Deployment Success
+        if: success()
+        run: echo "Packer build and deployment completed successfully!"
