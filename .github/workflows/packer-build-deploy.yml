@@ -1,4 +1,4 @@
-name: Build and Deploy Packer Image
+name: Build and Deploy Packer Image2
 
 on:
   push:
